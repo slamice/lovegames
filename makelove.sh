@@ -1,5 +1,10 @@
 #/bin/zsh
+for dir in *;
+do
+  cd "$dir" && zip -r "$dir".zip . -i *i 
+done
 
-for i in /Users/slamice/Documents/development/lua/*;
-do zip -r "$i".zip "$i" && rename .zip .love *.zip
+for dir in *;
+do
+  mv `basename $dir .zip` "`basename $dir .zip`.love"
 done
