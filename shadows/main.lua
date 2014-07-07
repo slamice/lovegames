@@ -1,5 +1,6 @@
 function love.load()
     g = love.graphics
+    f = love.filesystem
     playerColor = {255,0,128}
     groundColor = {25,200,25}
     
@@ -53,16 +54,31 @@ function love.draw()
     -- draw the player shape
     g.setColor(playerColor)
     g.rectangle("fill", x, y, p.width, p.height)
-    
-    -- draw the ground
-    g.setColor(groundColor)
-    g.rectangle("fill", 0, yFloor, 800, 100)
-    
+
+--[[    file = love.objects:newFile( "level1.lua" )
+    love.filesystem:open(file)
+    g.print("array: "..file:read(), 5, 40)
+
+    if file then
+]]        
+        -- draw the ground
+        groundx = 800
+        groundy = 100
+        g.setColor(groundColor)
+        g.rectangle("fill", 0, yFloor, groundx, groundy)
+        g.print("Floor coordinates: x:"..groundx..", y:"..groundy, 5, 35)
+--[[    else file:close()
+    end
+]]
     -- debug information
     g.setColor(255, 255, 255)
+
     local isTrue = ""
     g.print("Player coordinates: ("..x..","..y..")", 5, 5)
     g.print("Current state: "..p.state, 5, 20)
+
+
+
 end
  
 function love.keyreleased(key)
