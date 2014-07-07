@@ -1,4 +1,5 @@
 function love.load()
+    path = "/PUT/PATH/HERE"
     g = love.graphics
     f = love.filesystem
     playerColor = {255,0,128}
@@ -55,8 +56,12 @@ function love.draw()
     g.setColor(playerColor)
     g.rectangle("fill", x, y, p.width, p.height)
 
---[[    file = love.objects:newFile( "level1.lua" )
-    love.filesystem:open(file)
+    filename = path.."level1.txt"
+    file = io.open(filename,"r")
+    stringOne = file:read("*all")
+    print ("blah "..stringOne)
+
+--[[    love.filesystem:open(file)
     g.print("array: "..file:read(), 5, 40)
 
     if file then
