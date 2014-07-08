@@ -1,12 +1,13 @@
 function love.load()
-    path = "/PUT/PATH/HERE"
+    path = "/PATH/HERE"
     g = love.graphics
     f = love.filesystem
     playerColor = {255,0,128}
     groundColor = {25,200,25}
     
     -- instantiate our player and set initial values
-    require "Player"
+    helpers = require "Player"
+    require "helpers"
     p = Player:new()
     
     p.x = 300
@@ -56,10 +57,13 @@ function love.draw()
     g.setColor(playerColor)
     g.rectangle("fill", x, y, p.width, p.height)
 
-    filename = path.."level1.txt"
-    file = io.open(filename,"r")
-    stringOne = file:read("*all")
-    print ("blah "..stringOne)
+    local inputfile = io.open(path.."level1.txt", "rb")
+    filecontent = inputfile:read("*all")
+    inputfile:close()
+
+    filecontent = helpers:split(filecontent,',')
+
+    print ("blah "..filecontent)
 
 --[[    love.filesystem:open(file)
     g.print("array: "..file:read(), 5, 40)

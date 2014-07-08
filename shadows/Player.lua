@@ -1,5 +1,4 @@
 -- Player class
--- Author: Sean Laurvick
 -- A simple Player object for use in the Platformer game.
  
 Player = {}
