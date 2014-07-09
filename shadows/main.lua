@@ -1,19 +1,21 @@
 function love.load()
-    path = "/Users/default/Documents/dev/lovegames/shadows/"
+    require "Player"
+    require "/lib/helpers"
+    HC = require '/lib/hardoncollider'
+
+    path = "/file/path/here/"
     g = love.graphics
     f = love.filesystem
     playerColor = {255,0,128}
     groundColor = {25,200,25}
     
     -- instantiate our player and set initial values
-    require "Player"
     p = Player:new()
 
     -- Get helper functions
-    require "Helpers"
     h = Helpers
     
-    p.x = 300
+    p.x = 575
     p.y = 300
     p.width = 25
     p.height = 40
@@ -77,12 +79,13 @@ function love.draw()
         block = h:split(v,',')
 
         -- draw the ground
-        groundx = block[1]
-        groundy = block[2]
+        posx = block[1]
+        posy = block[2]
+        groundx = block[3]
+        groundy = block[4]
 
-        print(groundy)
         g.setColor(groundColor)
-        g.rectangle("fill", 200, yFloor, groundx, groundy)
+        g.rectangle("fill", posx, posy, groundx, groundy)
         g.print("Floor coordinates: x:"..groundx..", y:"..groundy, 5, 35)
     end
 
