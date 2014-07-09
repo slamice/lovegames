@@ -1,14 +1,17 @@
 function love.load()
-    path = "/PATH/HERE"
+    path = "/Users/default/Documents/dev/lovegames/shadows/"
     g = love.graphics
     f = love.filesystem
     playerColor = {255,0,128}
     groundColor = {25,200,25}
     
     -- instantiate our player and set initial values
-    helpers = require "Player"
-    require "helpers"
+    require "Player"
     p = Player:new()
+
+    -- Get helper functions
+    require "Helpers"
+    h = Helpers
     
     p.x = 300
     p.y = 300
@@ -57,28 +60,32 @@ function love.draw()
     g.setColor(playerColor)
     g.rectangle("fill", x, y, p.width, p.height)
 
-    local inputfile = io.open(path.."level1.txt", "rb")
-    filecontent = inputfile:read("*all")
-    inputfile:close()
 
-    filecontent = helpers:split(filecontent,',')
-
-    print ("blah "..filecontent)
 
 --[[    love.filesystem:open(file)
     g.print("array: "..file:read(), 5, 40)
 
     if file then
-]]        
+]]       
+
+
+    local lines = lines_from(path.."level1.txt")
+
+    -- print all line numbers and their contents
+    for k,v in pairs(lines) do
+      
+        block = h:split(v,',')
+
         -- draw the ground
-        groundx = 800
-        groundy = 100
+        groundx = block[1]
+        groundy = block[2]
+
+        print(groundy)
         g.setColor(groundColor)
-        g.rectangle("fill", 0, yFloor, groundx, groundy)
+        g.rectangle("fill", 200, yFloor, groundx, groundy)
         g.print("Floor coordinates: x:"..groundx..", y:"..groundy, 5, 35)
---[[    else file:close()
     end
-]]
+
     -- debug information
     g.setColor(255, 255, 255)
 

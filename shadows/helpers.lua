@@ -1,9 +1,9 @@
 -- Helper class
 -- A Bunch of helper functions
-local helpers = {}
+Helpers = {}
 
 -- Compatibility: Lua-5.0
-function helpers.split(str, delim, maxNb)
+function Helpers:split(str, delim, maxNb)
     -- Eliminate bad cases...
     if string.find(str, delim) == nil then
         return { str }
@@ -26,4 +26,19 @@ function helpers.split(str, delim, maxNb)
         result[nb + 1] = string.sub(str, lastPos)
     end
     return result
+end
+
+function lines_from(file)
+  if not file_exists(file) then return {} end
+  lines = {}
+  for line in io.lines(file) do 
+    lines[#lines + 1] = line
+  end
+  return lines
+end
+
+function file_exists(file)
+  local f = io.open(file, "rb")
+  if f then f:close() end
+  return f ~= nil
 end
