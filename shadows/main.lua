@@ -11,13 +11,12 @@ local text = {}
 
 -- this is called when two shapes collide
 function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
-    text[#text+1] = string.format("Colliding. mtv = (%s,%s)", 
-                                    mtv_x, mtv_y)
+    text = string.format("Colliding. mtv = (%s,%s)", mtv_x, mtv_y)
 end
 
 -- this is called when two shapes stop colliding
 function collision_stop(dt, shape_a, shape_b)
-    text[#text+1] = "Stopped colliding"
+    text = "Stopped colliding"
 end
 
 -- Initial Load function
@@ -39,12 +38,15 @@ function love.load()
 end
  
 function love.update(dt)
+  --[[ HERO ]]
+  -- Move Hero
   pos = {pos[1] + (moveDir[1] * speed * dt), 
          pos[2] + (moveDir[2] * speed * dt)}
 
+
+  --[[ COLLISIONS ]]
   -- check for collisions
   -- Collider:update(dt)
-
 end
 
 function love.draw(dt)
@@ -59,19 +61,17 @@ function love.draw(dt)
       block = h:split(lines[i],',')
 
       -- draw the ground
-      posx = block[1]
-      posy = block[2]
-      groundx = block[3]
-      groundy = block[4]
+      posx = tonumber(block[1])
+      posy = tonumber(block[2])
+      groundx = tonumber(block[3])
+      groundy = tonumber(block[4])
 
-      -- shapes can be drawn to the screen
-      -- rect = g.rectangle("fill",posx,posy,groundx,groundy)
-     rect = Collider:addRectangle(100,100,100,100)
+     rect = Collider:addRectangle(posx,posy,groundx,groundy)
      rect:draw('fill')
      g.setColor(0,0,0)
   end
 
-   g.print(text)
+  --g.print(#text)
 end
 
 function love.keypressed(key, unicode)
