@@ -7,16 +7,18 @@ Player = {}
 function Player:new()
     -- define our parameters here
     local object = {
-    x = 0,
-    y = 0,
-    width = 0,
-    height = 0,
-    xSpeed = 0,
-    ySpeed = 0,
-    state = "",
-    jumpSpeed = 0,
-    runSpeed = 0,
-    canJump = false
+        img = { hero = g.newImage("hero.png")},
+        x = 100,
+        y = 100,
+        moveDir = { 0, 0 },
+--        xSpeed = 0,
+--        ySpeed = 0,
+--        state = "",
+--        jumpSpeed = 0,
+        speed = 200,
+--        canJump = false
+--        onground = false
+        color = {255,255,255}
     }
     setmetatable(object, { __index = Player })
     return object
@@ -31,11 +33,11 @@ function Player:jump()
 end
  
 function Player:moveRight()
-    self.xSpeed = self.runSpeed
+    self.xSpeed = self.speed
 end
  
 function Player:moveLeft()
-    self.xSpeed = -1 * (self.runSpeed)
+    self.xSpeed = -1 * (self.speed)
 end
  
 function Player:stop()
