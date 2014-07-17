@@ -10,15 +10,15 @@ function Player:new()
         img = { hero = g.newImage("hero.png")},
         x = 100,
         y = 100,
-        moveDir = { 0, 0 },
 --        xSpeed = 0,
 --        ySpeed = 0,
 --        state = "",
 --        jumpSpeed = 0,
-        speed = 200,
+        speed = 400,
 --        canJump = false
 --        onground = false
-        color = {255,255,255}
+        color = {255,255,255},
+        ball = {},
     }
     setmetatable(object, { __index = Player })
     return object
@@ -32,18 +32,14 @@ function Player:jump()
     end
 end
  
-function Player:moveRight()
-    self.xSpeed = self.speed
+function Player:moveRight(dt)
+    player.x = player.x - player.speed * dt
 end
  
-function Player:moveLeft()
-    self.xSpeed = -1 * (self.speed)
+function Player:moveLeft(dt)
+    player.x = player.x + player.speed * dt
 end
- 
-function Player:stop()
-    self.xSpeed = 0
-end
- 
+
 function Player:hitFloor(maxY)
     self.y = maxY - self.height
     self.ySpeed = 0

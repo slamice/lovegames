@@ -3,47 +3,43 @@ require "/lib/helpers"
 HC = require '/lib/HardonCollider'
 g = love.graphics
 f = love.filesystem
-path = "/Users/default/Documents/dev/lovegames/shadows/"
+path = "/Users/slamice/Documents/development/Lua/lovegames/shadows/"
 assets_path = ''
 
 -- array to hold collision messages
-local text = {}
+local text = ''
 
 -- this is called when two shapes collide
-function on_collision(dt, shape_a, shape_b, mtv_x, mtv_y)
-    text = string.format("Colliding. mtv = (%s,%s)", mtv_x, mtv_y)
+function on_collide(dt, shape_a, shape_b)
+    text = string.format("Colliding")
 end
 
--- this is called when two shapes stop colliding
-function collision_stop(dt, shape_a, shape_b)
-    text = ""
-end
 
 -- Initial Load function
 function love.load()
     h = Helpers
-    Collider = HC(100, on_collision, collision_stop)
+    Collider = HC(100, on_collide)
     player = Player:new()
+    player.ball = Collider:addCircle(player.x,player.y, 10)
 
     g.setBackgroundColor(255,255,255)
 
     local lines = lines_from(path.."level1.txt")
-
-
-    circle = Collider:addCircle(player.x,player.y,20)
 
 end
  
 function love.update(dt)
   --[[ HERO ]]
   -- Move Hero
-  pos = {player.x + (player.moveDir[1] * player.speed * dt), 
-         player.y + (player.moveDir[2] * player.speed * dt)}
-
+  if love.keyboard.isDown("left") then
+    player:moveRight(dt)
+  elseif love.keyboard.isDown("right") then
+    player:moveLeft(dt)
+  end
 
   --[[ COLLISIONS ]]
   -- check for collisions
-  --Collider:update(dt)
+  Collider:update(dt)
 end
 
 function love.draw(dt)
@@ -68,28 +64,24 @@ function love.draw(dt)
      g.setColor(0,0,0)
   end
 
+  --if text ~= '' then print(text) end
+
 end
 
-function love.keypressed(key, unicode)
-   if key == "up" then
-      player.moveDir[2] = -5
-   elseif key == "down" then
-      player.moveDir[2] = 5
-   elseif key == "right" then
-      player.moveDir[1] = 5
+--[[function love.keypressed(key, unicode)
+   if key == "right" then
+      player.x = player.x + 10
    elseif key == "left" then
-      player.moveDir[1] = -5
+      player.x = player.x - 10
    end
 end
 
 function love.keyreleased(key, unicode)
-   if key == "up" then
-      player.moveDir[2] = 0
-   elseif key == "down" then
-      player.moveDir[2] = 0
+   if key == "down" then
+      player.y = player.y + 10
    elseif key == "right" then
-      player.moveDir[1] = 0
+      player.x = player.x + 10
    elseif key == "left" then
-      player.moveDir[1] = 0
+      player.x = player.x - 10
    end
-end
+end]]
