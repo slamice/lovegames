@@ -2,7 +2,8 @@
 -- A simple Player object for use in the Platformer game.
  
 Player = {}
- 
+states = {'fall','run','stand'}
+
 -- Constructor
 function Player:new()
     -- define our parameters here
@@ -18,7 +19,7 @@ function Player:new()
 --        canJump = false
 --        onground = false
         color = {255,255,255},
-        ball = {},
+
     }
     setmetatable(object, { __index = Player })
     return object
