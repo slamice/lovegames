@@ -10,8 +10,9 @@ rects = {}
 local text = ''
 
 -- this is called when two shapes collide
-function on_collide(dt, shape_a, shape_b)
-    print("hitting")
+function on_collide(dt, shape_a, shape_b, mtv_x, mtv_y)
+    print(string.format("Colliding. mtv = (%s,%s)",mtv_x, mtv_y))
+    --g.print("Shape_a x:"..shape_a..", Shape_b y:"..shape_b, 10, 25)
 end
 
 
@@ -81,8 +82,6 @@ function love.draw(dt)
   -- Player
   g.draw(player.img, player.x, player.y)
 
---  g.draw(coll.circle, coll.x, coll.y)
-  --player.coll:draw('fill')
   g.print("Player coordinates: x:"..player.x..", y:"..player.y, 5, 25)
   
   for k, v in pairs(rects) do
