@@ -5,31 +5,41 @@
 --]]
 
 -- libs
+local helper   = require 'lib.helpers'
 local window   = require 'love.window'
 local player   = require 'assets.player'
 local bump     = require 'lib.bump'
 
 -- LEVELS PATH
-local path     = '/assets/levels/'
+local path     = '/Users/slamice/Documents/development/lua/lovegames/shadows/assets/levels/'
 
-
-local player   = require 'assets.player'
+-- Variables
 local map      = {}
-local boxes    = {}
+local blocks   = {}
+local world    = {}
 local g        = love.graphics
 
 function map:new(w, h)
   self.width = w
   self.height = h
-  self.world = bump.newWorld()
-  self.player = player:initialize(self.world, 0, 0, 50, 50)
+  world = bump.newWorld()
+  self.player = player:initialize(world, 0, 0, 50, 50)
   map:loadLevel()
 --  window.setMode(width, height, {resizable=true, vsync=false, minwidth=400, minheight=300})
 end
 
 function map:draw()
   player:draw()
-  map:drawLevel()
+  for _,block in ipairs(blocks) do
+    g.setColor(0,0,0)
+    g.rectangle("fill", block.l, block.t, block.w, block.h)
+  end
+end
+
+local function addBlock(l,t,w,h)
+  local block = {l=l,t=t,w=w,h=h}
+  blocks[#blocks+1] = block
+  world:add(block, l,t,w,h)
 end
 
 function map:loadLevel()
@@ -37,28 +47,13 @@ function map:loadLevel()
   p = path.."level1.txt"
   for i in pairs(lines_from(p)) do
 
-    line = h:split(lines[i],',')
+    line = split(lines[i],',')
 
-    print(line)
-    -- draw the ground
-    box = {
-        l = tonumber(line[1]),
-        t = tonumber(line[2]),    
-        w = tonumber(line[3]),
-        h = tonumber(line[4])
-    }
-
-    box = self.world:add(box,box.l,box.t,box.w,box.h)
-
-    table.insert(boxes,box)
+    -- Read block coordinates ffrom file 
+    addBlock(tonumber(line[1]), tonumber(line[2]),    
+             tonumber(line[3]), tonumber(line[4]))
   end
-end
-
-function map:drawLevel()
-  for box in pairs(boxes) do
-    g.setColor(255,0,0,70)
-    g.rectangle("fill", box.l, box.t, box.w, box.h)
-  end
+  --helper.print_r(boxes)
 end
 
 function map:reset()

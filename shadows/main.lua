@@ -1,4 +1,3 @@
-local helper   = require 'lib.helpers'
 local map      = require 'lib.map'
 local g        = love.graphics
 
