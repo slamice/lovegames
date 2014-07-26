@@ -13,10 +13,10 @@ function player:initialize(newWorld, l,t,w,h)
   world = newWorld 
   world:add(self,l,t,w,h)
   self.speed = 300
-  -- self.changeVelocityByGravity(dt)
+  self.gravity = 9.81
+  self.fall_velocity = 100
   --self.map = map
   self.color = {0,0,0}
-  self.onground = false
 end
 
 function player:update(dt)
@@ -27,11 +27,13 @@ function player:update(dt)
     dx = -self.speed * dt
   end
 
-  if love.keyboard.isDown('down') then
+--[[  if love.keyboard.isDown('down') then
     dy = self.speed * dt
   elseif love.keyboard.isDown('up') then
     dy = -self.speed * dt
-  end
+  end]]
+
+  dy = dy + (self.gravity*self.fall_velocity*dt)
 
   if dx ~= 0 or dy ~= 0 then
     local future_l, future_t = player.l + dx, player.t + dy

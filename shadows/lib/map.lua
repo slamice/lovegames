@@ -23,7 +23,7 @@ function map:new(w, h)
   self.width = w
   self.height = h
   world = bump.newWorld()
-  self.player = player:initialize(world, 0, 0, 50, 50)
+  self.player = player:initialize(world, 200, 0, 50, 50)
   map:loadLevel()
 --  window.setMode(width, height, {resizable=true, vsync=false, minwidth=400, minheight=300})
 end
