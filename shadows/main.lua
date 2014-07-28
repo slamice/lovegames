@@ -3,7 +3,7 @@ local g        = love.graphics
 
 
 width = 800
-height = 600
+height = 800
 
 -- [[ Load ]]
 function love.load()
