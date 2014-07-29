@@ -12,8 +12,9 @@ function player:initialize(newWorld, l,t,w,h)
   self.img = g.newImage("/assets/hero.png")
   world = newWorld 
   world:add(self,l,t,w,h)
-  self.speed = 300
-  self.gravity = 9.81
+  self.speed = 200
+  self.gravity = 1
+  self.canJump = true
   self.fall_velocity = 100
   --self.map = map
   self.color = {0,0,0}
@@ -29,9 +30,9 @@ function player:update(dt)
 
 --[[  if love.keyboard.isDown('down') then
     dy = self.speed * dt
-  elseif love.keyboard.isDown('up') then
-    dy = -self.speed * dt
-  end]]
+]]if love.keyboard.isDown('up') then
+    dy = dy - self.speed * dt
+  end
 
   dy = dy + (self.gravity*self.fall_velocity*dt)
 
